@@ -5,8 +5,8 @@
 	
 	"version": "0.1",
 	"description": "Allow you to control a LightShark with chataigne",
-	"url":"",
-	"downloadURL": "",
+	"url":"https://github.com/norbertrostaing/LightSharkforChataigne",
+	"downloadURL": "https://github.com/norbertrostaing/LightSharkforChataigne/archive/refs/heads/main.zip",
 	
 	"hasInput": true,
 	"hasOutput": true,
