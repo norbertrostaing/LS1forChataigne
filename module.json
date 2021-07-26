@@ -1,0 +1,419 @@
+{
+	"name": "LightShark",
+	"type": "OSC",
+	"path": "Hardware",
+	
+	"version": "0.1",
+	"description": "Allow you to control a LightShark with chataigne",
+	"url":"",
+	"downloadURL": "",
+	
+	"hasInput": true,
+	"hasOutput": true,
+
+	"hideDefaultCommands": true,
+	"hideDefaultParameters": [
+	],
+
+	"defaults": {
+		"OSC Input": {
+			"localPort" : 9000,
+		},
+		"OSC Outputs": {
+			"OSC Output": {
+				"local" : false,
+				"remotePort" : 8000,
+				"listenToFeedback":false
+			}
+		}
+	},
+	
+	"parameters": {
+	},
+	
+	"scripts": [
+		"lightShark.js"
+	],
+	
+	"values": {
+	},
+	
+	"commands": {
+
+
+
+
+
+
+		"Page_Up" : {
+			"menu" : "Playback",
+			"callback" : "Page_Up",
+		},
+
+		"Page_Down" : {
+			"menu" : "Playback",
+			"callback" : "Page_Down",
+		},
+
+		"DBO" : {
+			"menu" : "Main",
+			"callback" : "DBO",
+		},
+
+		"Edit" : {
+			"menu" : "Edition",
+			"callback" : "Edit",
+		},
+
+		"Update" : {
+			"menu" : "Edition",
+			"callback" : "Update",
+		},
+
+		"Delete" : {
+			"menu" : "Edition",
+			"callback" : "Delete",
+		},
+
+		"Copy" : {
+			"menu" : "Edition",
+			"callback" : "Copy",
+		},
+
+		"Move" : {
+			"menu" : "Edition",
+			"callback" : "Move",
+		},
+
+		"Set" : {
+			"menu" : "Edition",
+			"callback" : "Set",
+		},
+
+		"Fan" : {
+			"menu" : "Main",
+			"callback" : "Fan",
+		},
+
+		"Find" : {
+			"menu" : "Main",
+			"callback" : "Find",
+		},
+
+		"Clear" : {
+			"menu" : "Main",
+			"callback" : "Clear",
+		},
+
+		"Rec" : {
+			"menu" : "Main",
+			"callback" : "Rec",
+		},
+
+		"Select_PB" : {
+			"menu" : "Playback",
+			"callback" : "Select_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Go_PB" : {
+			"menu" : "Playback",
+			"callback" : "Go_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Flash_PB" : {
+			"menu" : "Playback",
+			"callback" : "Flash_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Stop_PB" : {
+			"menu" : "Playback",
+			"callback" : "Stop_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Prev_PB" : {
+			"menu" : "Playback",
+			"callback" : "Prev_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Next_PB" : {
+			"menu" : "Playback",
+			"callback" : "Next_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Pause_PB" : {
+			"menu" : "Playback",
+			"callback" : "Pause_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Level_PB" : {
+			"menu" : "Playback",
+			"callback" : "Level_PB",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":30,
+					"useForMapping": true
+				}, 
+				"Value": {
+					"type": "Float",
+					"default": 0, 
+					"min":0,
+					"max":1,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Go_Main" : {
+			"menu" : "Playback",
+			"callback" : "Go_Main",
+		},
+
+		"Stop_Main" : {
+			"menu" : "Playback",
+			"callback" : "Stop_Main",
+		},
+
+		"Prev_Main" : {
+			"menu" : "Playback",
+			"callback" : "Prev_Main",
+		},
+
+		"Next_Main" : {
+			"menu" : "Playback",
+			"callback" : "Next_Main",
+		},
+
+		"Pause_Main" : {
+			"menu" : "Playback",
+			"callback" : "Pause_Main",
+		},
+
+		"Level_GM" : {
+			"menu" : "Main",
+			"callback" : "Level_GM",
+			"parameters" : {
+				"Value": {
+					"type": "Float",
+					"default": 0, 
+					"min":0,
+					"max":1,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Encoder" : {
+			"menu" : "",
+			"callback" : "Encoder",
+			"parameters" : {
+				"Playback": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":4,
+					"useForMapping": true
+				}, 
+				"Value": {
+					"type": "Enum",
+					"options" : {
+						"Up" : 1,
+						"Down" : -1
+					}
+				}, 
+			}
+		},
+
+		"SelectFixture" : {
+			"menu" : "Main",
+			"callback" : "SelectFixture",
+		},
+
+		"SelectGroup" : {
+			"menu" : "Main",
+			"callback" : "SelectGroup",
+		},
+
+		"SelectionNext" : {
+			"menu" : "Main",
+			"callback" : "SelectionNext",
+		},
+
+		"SelectionPrevious" : {
+			"menu" : "Main",
+			"callback" : "SelectionPrevious",
+		},
+
+		"Intensity" : {
+			"menu" : "ParamType",
+			"callback" : "Intensity",
+		},
+
+		"Position" : {
+			"menu" : "ParamType",
+			"callback" : "Position",
+		},
+
+		"Color" : {
+			"menu" : "ParamType",
+			"callback" : "Color",
+		},
+
+		"Beam" : {
+			"menu" : "ParamType",
+			"callback" : "Beam",
+		},
+
+		"Advance" : {
+			"menu" : "ParamType",
+			"callback" : "Advance",
+		},
+
+		"Gobo" : {
+			"menu" : "ParamType",
+			"callback" : "Gobo",
+		},
+
+		"Fx" : {
+			"menu" : "ParamType",
+			"callback" : "Fx",
+		},
+
+		"Executor" : {
+			"menu" : "Playback",
+			"callback" : "Executor",
+			"parameters" : {
+				"Page": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":2,
+					"useForMapping": true
+				}, 
+				"Col": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":8,
+					"useForMapping": true
+				}, 
+				"Row": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":6,
+					"useForMapping": true
+				}, 
+				"Action": {
+					"type": "Enum",
+					"options" : {
+						"Press" : 1,
+						"Release" : 0,
+						"Both" : 2
+					}
+				}, 
+			}
+		},
+
+		"ExecutorLine" : {
+			"menu" : "Playback",
+			"callback" : "ExecutorLine",
+			"parameters" : {
+				"Line": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"max":6,
+					"useForMapping": true
+				}, 
+			}
+		},
+
+		"Sync" : {
+			"menu" : "Main",
+			"callback" : "Sync",
+		},
+
+		"Sync_Playbacks" : {
+			"menu" : "Main",
+			"callback" : "Sync_Playbacks",
+		},
+
+		"Sync_Executors" : {
+			"menu" : "Main",
+			"callback" : "Sync_Executors",
+		},
+
+		"StopAll" : {
+			"menu" : "Main",
+			"callback" : "StopAll",
+		},
+
+
+	}
+}
