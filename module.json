@@ -436,21 +436,21 @@
 		},
 		
 		"Playback Chase Speed" : {
-			"menu" : "Master",
+			"menu" : "Playback",
 			"callback" : "PlaybackChaseSpeed",
 			"parameters" : {
 				"Playback": {
 					"type": "Integer",
 					"default": 1, 
 					"min":1,
-					"max":255,
+					"max":30,
 					"useForMapping": true },
 					
-				"Speed": {
-					"type": "Integer",
-					"default": 100, 
-					"min":0,
-					"max":200,
+				"Speed (BPM)": {
+					"type": "Float",
+					"default": 120, 
+					"min":20,
+					"max":400,
 					"useForMapping": true }  }
 		},
 		
@@ -464,7 +464,7 @@
 			"callback" : "ChaseSpeed",
 			"parameters" : {
 				"Speed (%)": {
-					"type": "Integer",
+					"type": "Float",
 					"default": 100, 
 					"min":0,
 					"max":200,
@@ -481,7 +481,7 @@
 			"callback" : "FxSize",
 			"parameters" : {					
 				"Fx Size (%)": {
-					"type": "Integer",
+					"type": "Float",
 					"default": 100, 
 					"min":0,
 					"max":200,
@@ -503,7 +503,7 @@
 			"callback" : "FxSpeed",
 			"parameters" : {					
 				"Fx Speed (%)": {
-					"type": "Integer",
+					"type": "Float",
 					"default": 100, 
 					"min":0,
 					"max":200,

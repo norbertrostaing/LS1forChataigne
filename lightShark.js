@@ -171,6 +171,10 @@ function Rec() {
 	local.send("/LS/Rec", 0.0);
 }
 
+//========================================================================
+//					PLAYBACK FUNCTIONS
+//========================================================================
+
 function Select_PB(n) { // playBack 1-30
 
 	local.send("/LS/Select/PB/"+n+"", 0.0);
@@ -210,6 +214,10 @@ function Level_PB(n, val) { // playBack 1-30
 	local.send("/LS/Level/PB/"+n+"", val);
 }
 
+//========================================================================
+//					MAIN FUNCTIONS
+//========================================================================
+
 function Go_Main() {
 	local.send("/LS/Go/Main", 0.0);
 }
@@ -239,6 +247,10 @@ function Encoder(n, v) { // encoder 1-4, v = -1 || 1
 	local.send("/LS/Encoder/"+n+"");
 }
 
+//========================================================================
+//					ACTIONS FUNCTIONS
+//========================================================================
+
 function SelectFixture() {
 	local.send("/LS/SelectFixture", 0.0);
 }
@@ -254,6 +266,10 @@ function SelectionNext() {
 function SelectionPrevious() {
 	local.send("/LS/SelectionPrevious", 0.0);
 }
+
+//========================================================================
+//					ATTRIBUTE FUNCTIONS
+//========================================================================
 
 function Intensity() {
 	local.send("/LS/Intensity", 0.0);
@@ -282,6 +298,10 @@ function Gobo() {
 function Fx() {
 	local.send("/LS/Fx", 0.0);
 }
+
+//========================================================================
+//					CUES FUNCTIONS
+//========================================================================
 
 function Executor(page, col, row, action) { // page 1-2, col 1-8, line 1-6
 	if (action == 2) {
@@ -317,7 +337,9 @@ function Tap() {
 	local.send("/LS/Tap", 0.0);
 }
 
-// ========= NEW FUNCTIONS ======
+//========================================================================
+//					NEW FUNCTIONS
+//========================================================================
 
 function TapPBSpeed(pb) {
 	local.send("/LS/Tap/PB/"+pb, 0.0);
@@ -332,6 +354,7 @@ function ResetSmChase() {
 }
 
 function ChaseSpeed(val) {
+	var val = val/200*255 ;
 	local.send("/LS/Level/SmChase/", val);
 }
 
@@ -340,6 +363,7 @@ function ResetSmSize() {
 }
 
 function FxSize(val) {
+	var val = val/200*255 ;
 	local.send("/LS/Level/SmSize/", val);
 }
 
@@ -352,6 +376,7 @@ function TapFxSpeed() {
 }
 
 function FxSpeed(val) {
+	var val = val/200*255 ;
 	local.send("/LS/Level/SmSpeed/", val);
 }
 
