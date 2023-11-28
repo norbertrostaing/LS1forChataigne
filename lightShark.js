@@ -1,122 +1,207 @@
-// using https://wiki.munichmakerlab.de/images/1/17/UNOFFICIAL_X32_OSC_REMOTE_PROTOCOL_(1).pdf
 
 var myParameters = {};
 
-function oscEvent(address, args) {
-	script.log(" Message received : " + address);
+//========================================================================
+//							 INIT FUNCTION
+//========================================================================
+function init() {
+
+	SyncAll = local.values.addTrigger("Click to Sync All", "Request all the Values from the Console !!" , false);
+
+// CREATE CONTAINERS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	playbacks = local.values.addContainer("Playback Faders");
+	playbacks.setCollapsed(true);
+//	playbacks.addTrigger("Click to Sync Playbacks", "" , false);
+	for (var n = 1; n<= 30; n++) {
+		playbacks.addFloatParameter("Playback "+n, "","", "0","255");  }
+// Executors Coulomn Page 1		
+	execbutt = local.values.addContainer("Executors Page 1");
+	execbutt.setCollapsed(true);
+//	execbutt.addTrigger("Click to Sync Executors", "" , false);
+	for (var n = 1; n<= 8; n++) {
+	execbutt.addStringParameter("Col "+n, "", ""); }
+// Executors Coulomn Page 2		
+	execbutt = local.values.addContainer("Executors Page 2");
+	execbutt.setCollapsed(true);
+//	execbutt.addTrigger("Click to Sync Executors", "" , false);
+	for (var n = 1; n<= 8; n++) {
+	execbutt.addStringParameter("Col "+n, "", ""); }
+// Executors Bouttons Page 1
+		
+	executors = local.values.addContainer("Executors Buttons Page 1");
+	executors.setCollapsed(true);
+//	executors.addTrigger("Click to Sync Executors", "" , false);	
+	for (var i = 1; i<= 6; i++) {
+		executors.addStringParameter("Row "+i, "", "Row "+i);
+	for (var n = 1; n<= 8; n++) {		
+	var butt = "Row "+i+" _ Button "+n ; 
+		executors.addBoolParameter(butt, "", false);  } } 
+// Executors Bouttons Page 1
+//	executors.addTrigger("Click to Sync Executors", "" , false);	
+	executors = local.values.addContainer("Executors Buttons Page 2");
+	executors.setCollapsed(true);
+	for (var i = 1; i<= 6; i++) {
+		executors.addStringParameter("Row "+i, "", "Row "+i);
+	for (var n = 1; n<= 8; n++) {		
+	var butt = "Row "+i+" _ Button "+n ; 
+		executors.addBoolParameter(butt, "", false);  } }  
+				
 }
+
+//========================================================================
+//							 VALUE CHANGE EVENTS
+//========================================================================
+function moduleValueChanged(value) { 
+
+// >>>>>>>>>>>>>>> SYNC FROM LIGHTSHARK <<<<<<<<<<<<<
+	if (value.name == "clickToSyncAll"){
+	local.send("/LS/Sync", 0.0); }
+	
+	if (value.name == "clickToSyncPlaybacks"){
+	local.send("/LS/Sync/Playbacks", 0.0); }
+	
+	if (value.name == "clickToSyncExecutors"){
+	local.send("/LS/Sync/Executors", 0.0);
+	for (var n = 1; n<= 8; n++) {
+	local.values.executorsPage1.getChild("Col"+n).set("");
+	local.values.executorsPage2.getChild("Col"+n).set(""); }  }
+	
+}
+
+//========================================================================
+//							 OSC CHANGE EVENTS
+//========================================================================
+function oscEvent(address, args) {
+
+//Playback Faders
+	for (var n = 1; n<= 30; n++) {
+	if (address == "/LS/Level/PB/"+n){
+	local.values.playbackFaders.getChild('playback'+n).set(args[0]); } }
+	
+//Executor Buttons Page 1	
+	for (var i = 1; i<= 6; i++) {	
+	for (var n = 1; n<= 8; n++) {			
+	var butt = "row"+i+"_button"+n ;
+	if (address == "/LS/Executor/1/"+n+"/"+i){	
+	local.values.executorsButtonsPage1.getChild(butt).set(args[0]);
+	if (args[0]== true){ var txt = "Button N°"+i+" = ON" ;
+	local.values.executorsPage1.getChild("Col"+n).set(txt); } } 
+	} }
+	
+//Executor Buttonss Page 2	
+	for (var i = 1; i<= 6; i++) {
+	for (var n = 1; n<= 8; n++) {		
+	var butt = "row"+i+"_button"+n ;
+	if (address == "/LS/Executor/2/"+n+"/"+i){
+	local.values.executorsButtonsPage2.getChild(butt).set(args[0]);
+	if (args[0]== true){ var txt = "Button N°"+i+" = ON" ;
+	local.values.executorsPage2.getChild("Col"+n).set(txt); } } } }
+}
+
+//========================================================================
+//					KEEP ALIVE
+//========================================================================
+
 
 function update(deltaTime) {
 	var now = util.getTime();
 	if(now > TSSendAlive) {
 		TSSendAlive = now + 5;
-		keepAlive();
-	}
+		keepAlive(); }
 }
 
 function keepAlive() {
-	local.send("/ping");
+	local.send("/LS/Sync",0.0);
 }
 
-
+//========================================================================
+//					COMMON FUNCTIONS
+//========================================================================
 
 function Page_Up() {
-	local.send("/LS/Page/Up", 1);
-	local.send("/LS/Page/Up", 0);
+	local.send("/LS/Page/Up", 0.0);
 }
 
 function Page_Down() {
-	local.send("/LS/Page/Down", 1);
-	local.send("/LS/Page/Down", 0);
+	local.send("/LS/Page/Down", 0.0);
 }
 
 function DBO(val) {
-	local.send("/LS/DBO", val, 1);
-	local.send("/LS/DBO", val, 0);
+	local.send("/LS/DBO", val);
 }
 
 function Edit() {
-	local.send("/LS/Edit", 1);
-	local.send("/LS/Edit", 0);
+	local.send("/LS/Edit", 0.0);
 }
 
 function Update() {
-	local.send("/LS/Update", 1);
-	local.send("/LS/Update", 0);
+	local.send("/LS/Update", 0.0);
 }
 
 function Delete() {
-	local.send("/LS/Delete", 1);
-	local.send("/LS/Delete", 0);
+	local.send("/LS/Delete", 0.0);
 }
 
 function Copy() {
-	local.send("/LS/Copy", 1);
-	local.send("/LS/Copy", 0);
+	local.send("/LS/Copy", 0.0);
 }
 
 function Move() {
-	local.send("/LS/Move", 1);
-	local.send("/LS/Move", 0);
+	local.send("/LS/Move", 0.0);
 }
 
 function Set() {
-	local.send("/LS/Set", 1);
-	local.send("/LS/Set", 0);
+	local.send("/LS/Set", 0.0);
 }
 
 function Fan() {
-	local.send("/LS/Fan", 1);
-	local.send("/LS/Fan", 0);
+	local.send("/LS/Fan", 0.0);
 }
 
 function Find() {
-	local.send("/LS/Find", 1);
-	local.send("/LS/Find", 0);
+
+	local.send("/LS/Find", 0.0);
 }
 
 function Clear() {
-	local.send("/LS/Clear", 1);
-	local.send("/LS/Clear", 0);
+	local.send("/LS/Clear", 0.0);
 }
 
 function Rec() {
-	local.send("/LS/Rec", 1);
-	local.send("/LS/Rec", 0);
+	local.send("/LS/Rec", 0.0);
 }
 
 function Select_PB(n) { // playBack 1-30
-	local.send("/LS/Select/PB/"+n+"", 1);
-	local.send("/LS/Select/PB/"+n+"", 0);
+
+	local.send("/LS/Select/PB/"+n+"", 0.0);
 }
 
 function Go_PB(n) {// playBack 1-30
-	local.send("/LS/Go/PB/"+n+"", 1);
-	local.send("/LS/Go/PB/"+n+"", 0);
+
+	local.send("/LS/Go/PB/"+n+"", 0.0);
 }
 
-function Flash_PB(n) {// playBack 1-30
-	local.send("/LS/Flash/PB/"+n+"", 1);
-	local.send("/LS/Flash/PB/"+n+"", 0);
+function Tap_PB(n) {// playBack 1-30
+	local.send("/LS/Tap/PB/"+n+"", 0.0);
+}
+
+function Flash_PB(n, val) {// playBack 1-30
+	local.send("/LS/Flash/PB/"+n+"", val);
 }
 
 function Stop_PB(n) {// playBack 1-30
-	local.send("/LS/Stop/PB/"+n+"", 1);
 	local.send("/LS/Stop/PB/"+n+"", 0);
 }
 
 function Prev_PB(n) {// playBack 1-30
-	local.send("/LS/Prev/PB/"+n+"", 1);
 	local.send("/LS/Prev/PB/"+n+"", 0);
 }
 
 function Next_PB(n) {// playBack 1-30
-	local.send("/LS/Next/PB/"+n+"", 1);
 	local.send("/LS/Next/PB/"+n+"", 0);
 }
 
 function Pause_PB(n) {// playBack 1-30
-	local.send("/LS/Pause/PB/"+n+"", 1);
 	local.send("/LS/Pause/PB/"+n+"", 0);
 }
 
@@ -126,28 +211,23 @@ function Level_PB(n, val) { // playBack 1-30
 }
 
 function Go_Main() {
-	local.send("/LS/Go/Main", 1);
-	local.send("/LS/Go/Main", 0);
+	local.send("/LS/Go/Main", 0.0);
 }
 
 function Stop_Main() {
-	local.send("/LS/Stop/Main", 1);
-	local.send("/LS/Stop/Main", 0);
+	local.send("/LS/Stop/Main", 0.0);
 }
 
 function Prev_Main() {
-	local.send("/LS/Prev/Main", 1);
-	local.send("/LS/Prev/Main", 0);
+	local.send("/LS/Prev/Main", 0.0);
 }
 
 function Next_Main() {
-	local.send("/LS/Next/Main", 1);
-	local.send("/LS/Next/Main", 0);
+	local.send("/LS/Next/Main", 0.0);
 }
 
 function Pause_Main() {
-	local.send("/LS/Pause/Main", 1);
-	local.send("/LS/Pause/Main", 0);
+	local.send("/LS/Pause/Main", 0.0);
 }
 
 function Level_GM(val ) {
@@ -160,58 +240,47 @@ function Encoder(n, v) { // encoder 1-4, v = -1 || 1
 }
 
 function SelectFixture() {
-	local.send("/LS/SelectFixture", 1);
-	local.send("/LS/SelectFixture", 0);
+	local.send("/LS/SelectFixture", 0.0);
 }
 
 function SelectGroup() {
-	local.send("/LS/SelectGroup", 1);
-	local.send("/LS/SelectGroup", 0);
+	local.send("/LS/SelectGroup", 0.0);
 }
 
 function SelectionNext() {
-	local.send("/LS/SelectionNext", 1);
-	local.send("/LS/SelectionNext", 0);
+	local.send("/LS/SelectionNext", 0.0);
 }
 
 function SelectionPrevious() {
-	local.send("/LS/SelectionPrevious", 1);
-	local.send("/LS/SelectionPrevious", 0);
+	local.send("/LS/SelectionPrevious", 0.0);
 }
 
 function Intensity() {
-	local.send("/LS/Intensity", 1);
-	local.send("/LS/Intensity", 0);
+	local.send("/LS/Intensity", 0.0);
 }
 
 function Position() {
-	local.send("/LS/Position", 1);
-	local.send("/LS/Position", 0);
+	local.send("/LS/Position", 0.0);
 }
 
 function Color() {
-	local.send("/LS/Color", 1);
-	local.send("/LS/Color", 0);
+	local.send("/LS/Color", 0.0);
 }
 
 function Beam() {
-	local.send("/LS/Beam", 1);
-	local.send("/LS/Beam", 0);
+	local.send("/LS/Beam", 0.0);
 }
 
 function Advance() {
-	local.send("/LS/Advance", 1);
-	local.send("/LS/Advance", 0);
+	local.send("/LS/Advance", 0.0);
 }
 
 function Gobo() {
-	local.send("/LS/Gobo", 1);
-	local.send("/LS/Gobo", 0);
+	local.send("/LS/Gobo", 0.0);
 }
 
 function Fx() {
-	local.send("/LS/Fx", 1);
-	local.send("/LS/Fx", 0);
+	local.send("/LS/Fx", 0.0);
 }
 
 function Executor(page, col, row, action) { // page 1-2, col 1-8, line 1-6
@@ -224,171 +293,72 @@ function Executor(page, col, row, action) { // page 1-2, col 1-8, line 1-6
 }
 
 function ExecutorLine(line) { // line 1-6
-	local.send("/LS/ExecutorLine/"+line+"", 1);
+//	local.send("/LS/ExecutorLine/"+line+"", 1);
 	local.send("/LS/ExecutorLine/"+line+"", 0);
 }
 
 function Sync() {
-	local.send("/LS/Sync", 1);
-	local.send("/LS/Sync", 0);
+	local.send("/LS/Sync", 0.0);
 }
 
 function Sync_Playbacks() {
-	local.send("/LS/Sync/Playbacks", 1);
-	local.send("/LS/Sync/Playbacks", 0);
+	local.send("/LS/Sync/Playbacks", 0.0);
 }
 
 function Sync_Executors() {
-	local.send("/LS/Sync/Executors", 1);
-	local.send("/LS/Sync/Executors", 0);
+	local.send("/LS/Sync/Executors", 0.0);
 }
 
 function StopAll() {
-	local.send("/LS/StopAll", 1);
-	local.send("/LS/StopAll", 0);
+	local.send("/LS/StopAll", 0.0);
 }
 
+function Tap() {
+	local.send("/LS/Tap", 0.0);
+}
 
+// ========= NEW FUNCTIONS ======
 
+function TapPBSpeed(pb) {
+	local.send("/LS/Tap/PB/"+pb, 0.0);
+}
 
+function PlaybackChaseSpeed(pb, val) {
+	local.send("/LS/ChaseValue/PB/"+pb, val);
+}
 
-/*
-Page Up
-/LS/Page/Up 
-0 = Released1 = Pressed
-Page Down
-/LS/Page/Down
-0 = Released1 = Pressed
-DBO
-/LS/DBO
-0 = Released1 = Pressed
-Edit
-/LS/Edit
-0 = Released1 = Pressed
-Update
-/LS/Update
-0 = Released1 = Pressed
-Delete
-/LS/Delete
-0 = Released1 = Pressed
-Copy
-/LS/Copy
-0 = Released1 = Pressed
-Move
-/LS/Move
-0 = Released1 = Pressed
-Set
-/LS/Set
-0 = Released1 = Pressed
-Fan
-/LS/Fan
-0 = Released1 = Pressed
-Find
-/LS/Find
-0 = Released1 = Pressed
-Clear
-/LS/Clear
-0 = Released1 = Pressed
-Rec
-/LS/Rec
-0 = Released1 = Pressed
-Playback Selection
-/LS/Select/PB/[x]
-Playback Number From=1To=300 = Released1 = PressedTo select the Playback number 9:
-/LS/Select/PB/9Playback Go
-/LS/Go/PB/[x]
-Playback Number From=1To=300 = Released1 = PressedTo press Go on Playback number 9: 
-/LS/Go/PB/9Playback Flash
-/LS/Flash/PB/[x]
-Playback Number From=1To=300 = Released1 = PressedTo press Flash on Playback 9:
-/LS/Flash/PB/9Playback Stop
-/LS/Stop/PB/[x]
-Playback Number From=1To=300 = Released1 = PressedTo press Stop on Playback 9:
-/LS/Stop/PB/9Playback Prev
-/LS/Prev/PB/[x]
-Playback Number From=1To=300 = Released1 = PressedTo press Prev on Playback 9:
-/LS/Prev/PB/9Playback Next
-/LS/Next/PB/[x]
-Playback Number From=1To=300 = Released1 = PressedTo press Next on Playback 3:
-/LS/Next/PB/3Playback Pause
-/LS/Pause/PB/[x]
-Playback Number From=1To=300 = Released1 = PressedTo press Pause on Playback 1:
-/LS/Pause/PB/1Playback Fader Level
-/LS/Level/PB/[x]
-Playback Number From=1To=30From = 0To = 255To Adjust Fader Level on PB 17:
-/LS/Level/PB/17Main Playback Go
-/LS/Go/Main
-0 = Released1 = Pressed
-Main Playback Stop
-/LS/Stop/Main
-0 = Released1 = Pressed
-Main Playback Prev
-/LS/Prev/Main
-0 = Released1 = Pressed
-Main Playback Next
-/LS/Next/Main
-0 = Released1 = Pressed
-Main Playback Pause
-/LS/Pause/Main
-0 = Released1 = Pressed
-Set GM Level
-/LS/Level/GM
-From = 0To = 255
-Encoders
-/LS/Encoder/[x]= Encoder Selected From=1To=4From = 
-1To = 1To Adjust parameters using Encoder B:
-/LS/Encoder/2Select Fixture
-/LS/SelectFixture
-0 = Released1 = Pressed
-Select Group
-/LS/SelectGroup
-0 = Released1 = Pressed
-Selection Next
-/LS/SelectionNext
-0 = Released1 = Pressed
-Selection Prev
-/LS/SelectionPrevious
-0 = Released1 = Pressed
+function ResetSmChase() {
+	local.send("/LS/Reset/SmChase/", 0.0);
+}
 
-132ControlCmdElementParameterExampleIntensity
-/LS/Intensity
-0 = Released1 = Pressed
-Position
-/LS/Position
-0 = Released1 = Pressed
-Colour
-/LS/Color
-0 = Released1 = Pressed
-Beam
-/LS/Beam
-0 = Released1 = Pressed
-Advanced
-/LS/Advance
-0 = Released1 = Pressed
-Gobo
-/LS/Gobo
-0 = Released1 = Pressed
-Fx
-/LS/Gobo
-0 = Released1 = Pressed
-Executor Push Mode
-/LS/Executor/[x]/[y]/[z]x]= Executor Page From=1To=2[y]= Select X position From=1To=8[z]= Select Y position From=1To=60 = Released1 = PressedTo Trigger Executor Position 2
-2
-/LS/Executor/1/2/2Executor Toggle Mode
-/LS/Executor/[x]/[y]/[z]
-/LS/Executor/[x]/[y]/[z][x]= Executor Page From=1To=2[y]= Select X position From=1To=8[z]= Select Y position From=1To=60 = Released0 = Pressed
-Trigger Executor Row
-/LS/ExecutorLine/[x]= Row Number From=1To=60 = Released1 = Pressed
-Sync All
-/LS/Sync
-0 = Released1 = Pressed
-Sync Only Parameters
-/LS/Sync/Playbacks
-0 = Released1 = Pressed
-Sync Only Executors
-/LS/Sync/Executors
-0 = Released1 = Pressed
-Release All
-/LS/StopAll
-0 = Released1 = Presse
-*/
+function ChaseSpeed(val) {
+	local.send("/LS/Level/SmChase/", val);
+}
+
+function ResetSmSize() {
+	local.send("/LS/Reset/SmSize/", 0.0);
+}
+
+function FxSize(val) {
+	local.send("/LS/Level/SmSize/", val);
+}
+
+function ResetSmSpeed() {
+	local.send("/LS/Reset/SmSpeed/", 0.0);
+}
+
+function TapFxSpeed() {
+	local.send("/LS/FxTap", 0.0);
+}
+
+function FxSpeed(val) {
+	local.send("/LS/Level/SmSpeed/", val);
+}
+
+function GotoCue(pb, cue) {
+	local.send("/LS/GotoCue/PB/"+pb, cue);
+}
+
+function PreloadCue(pb, cue) {
+	local.send("/LS/PreloadCue/PB/"+pb, cue);
+}
