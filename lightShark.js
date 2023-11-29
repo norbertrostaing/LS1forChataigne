@@ -380,10 +380,14 @@ function FxSpeed(val) {
 	local.send("/LS/Level/SmSpeed/", val);
 }
 
-function GotoCue(pb, cue) {
+function GotoCue(pb, cue, decim) {
+	if (decim <10) {decim = decim*10 ;}
+	var cue = cue*100 + decim ;
 	local.send("/LS/GotoCue/PB/"+pb, cue);
 }
 
-function PreloadCue(pb, cue) {
+function PreloadCue(pb, cue, decim) {
+	if (decim <10) {decim = decim*10 ;}
+	var cue = cue*100 + decim ;
 	local.send("/LS/PreloadCue/PB/"+pb, cue);
 }
