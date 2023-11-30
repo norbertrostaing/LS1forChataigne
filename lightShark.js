@@ -6,38 +6,38 @@ var myParameters = {};
 //========================================================================
 function init() {
 
-	SyncAll = local.values.addTrigger("Click to Sync All", "Request all the Values from the Console !!" , false);
+//	SyncAll = local.values.addTrigger("Click to Sync All", "Request all the Values from the Console !!" , false);
 
 // CREATE CONTAINERS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	playbacks = local.values.addContainer("Playback Faders");
 	playbacks.setCollapsed(true);
-//	playbacks.addTrigger("Click to Sync Playbacks", "" , false);
+	playbacks.addTrigger("Click to Sync Playbacks", "" , false);
 	for (var n = 1; n<= 30; n++) {
 		playbacks.addFloatParameter("Playback "+n, "","", "0","255");  }
 // Executors Coulomn Page 1		
 	execbutt = local.values.addContainer("Executors Page 1");
 	execbutt.setCollapsed(true);
-//	execbutt.addTrigger("Click to Sync Executors", "" , false);
+	execbutt.addTrigger("Click to Sync Executors", "" , false);
 	for (var n = 1; n<= 8; n++) {
 	execbutt.addStringParameter("Col "+n, "", ""); }
 // Executors Coulomn Page 2		
 	execbutt = local.values.addContainer("Executors Page 2");
 	execbutt.setCollapsed(true);
-//	execbutt.addTrigger("Click to Sync Executors", "" , false);
+	execbutt.addTrigger("Click to Sync Executors", "" , false);
 	for (var n = 1; n<= 8; n++) {
 	execbutt.addStringParameter("Col "+n, "", ""); }
 // Executors Bouttons Page 1
 		
 	executors = local.values.addContainer("Executors Buttons Page 1");
 	executors.setCollapsed(true);
-//	executors.addTrigger("Click to Sync Executors", "" , false);	
+	executors.addTrigger("Click to Sync Executors", "" , false);	
 	for (var i = 1; i<= 6; i++) {
 		executors.addStringParameter("Row "+i, "", "Row "+i);
 	for (var n = 1; n<= 8; n++) {		
 	var butt = "Row "+i+" _ Button "+n ; 
 		executors.addBoolParameter(butt, "", false);  } } 
 // Executors Bouttons Page 1
-//	executors.addTrigger("Click to Sync Executors", "" , false);	
+	executors.addTrigger("Click to Sync Executors", "" , false);	
 	executors = local.values.addContainer("Executors Buttons Page 2");
 	executors.setCollapsed(true);
 	for (var i = 1; i<= 6; i++) {
