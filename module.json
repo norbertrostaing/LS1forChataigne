@@ -3,7 +3,7 @@
 	"type": "OSC",
 	"path": "Lighting",
 	
-	"version": "1.0",
+	"version": "1.0.1",
 	"description": "Allow you to control a LightShark with chataigne",
 	"url":"https://github.com/norbertrostaing/LightSharkforChataigne",
 	"downloadURL": "https://github.com/norbertrostaing/LightSharkforChataigne/archive/refs/heads/main.zip",
