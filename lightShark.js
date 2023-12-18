@@ -244,7 +244,7 @@ function Level_GM(val ) {
 }
 
 function Encoder(n, v) { // encoder 1-4, v = -1 || 1
-	local.send("/LS/Encoder/"+n+"");
+	local.send("/LS/Encoder/"+n+"", v);
 }
 
 //========================================================================
