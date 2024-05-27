@@ -3,7 +3,7 @@
 	"type": "OSC",
 	"path": "Lighting",
 	
-	"version": "1.0.1",
+	"version": "1.1",
 	"description": "Allow you to control a LightShark with chataigne",
 	"url":"https://github.com/norbertrostaing/LightSharkforChataigne",
 	"downloadURL": "https://github.com/norbertrostaing/LightSharkforChataigne/archive/refs/heads/main.zip",
@@ -560,7 +560,66 @@
 					"min":0,
 					"max":99,
 					"useForMapping": true }  }
-		}			
+		},
+		
+		
+		
+		"Set Palette to Fixture" : {
+			"menu" : "Action",
+			"callback" : "SetPalFixture",
+			"parameters" : {
+				"Select Fixture N°": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"useForMapping": true },
+					
+				"Select Palette N°": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"useForMapping": true } }
+		},
+		
+		"Set Palette to Group" : {
+			"menu" : "Action",
+			"callback" : "SetPalGroup",
+			"parameters" : {
+				"Select Group N°": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"useForMapping": true },
+					
+				"Select Palette N°": {
+					"type": "Integer",
+					"default": 1, 
+					"min":1,
+					"useForMapping": true } }
+		},
+		
+		"Fixture Select Mode" : {
+			"menu" : "Action",
+			"callback" : "FixtureSelMode"
+		},
+		
+		"Group Select Mode" : {
+			"menu" : "Action",
+			"callback" : "GroupSelMode"
+		},
+		
+		"Select Next" : {
+			"menu" : "Action",
+			"callback" : "SelNext"
+		},
+		
+		
+		"Select Previous" : {
+			"menu" : "Action",
+			"callback" : "SelPrev"
+		},
+		
+					
 
 	}
 }
