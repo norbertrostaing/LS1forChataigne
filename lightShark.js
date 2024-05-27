@@ -338,7 +338,7 @@ function Tap() {
 }
 
 //========================================================================
-//					NEW FUNCTIONS
+//					NEW FUNCTIONS Soft 1.5
 //========================================================================
 
 function TapPBSpeed(pb) {
@@ -390,4 +390,32 @@ function PreloadCue(pb, cue, decim) {
 	if (decim <10) {decim = decim*10 ;}
 	var cue = cue*100 + decim ;
 	local.send("/LS/PreloadCue/PB/"+pb, cue);
+}
+
+//========================================================================
+//					NEW FUNCTIONS Soft 1.5.39
+//========================================================================
+
+function FixtureSelMode() {
+	local.send("/LS/SelectFixture");
+}
+
+function GroupSelMode() {
+	local.send("/LS/SelectGroup");
+}
+
+function SelNext() {
+	local.send("/LS/SelectionNext");
+}
+
+function SelPrev() {
+	local.send("/LS/SelectionPrevious");
+}
+
+function SetPalFixture(fxt, pal) {
+	local.send("/LS/ApplyUserPalette/Patch/"+fxt, pal);
+}
+
+function SetPalGroup(grp, pal) {
+	local.send("/LS/ApplyUserPalette/Group/"+grp, pal);
 }
